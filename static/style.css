@@ -1,9 +1,34 @@
-#table-repo-info tr td p {
+.color-red {
+  color: red;
+}
+
+.display-none {
+  display: none;
+}
+
+.font-mono {
   font-family: "Courier New", Courier, monospace;
 }
 
-#table-git-commits tbody tr td p {
-  font-family: "Courier New", Courier, monospace;
+.margin-vertical-1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.text-align-end {
+  text-align: end;
+}
+
+#div-alert-frame {
+  background-color: white;
+  border: solid 1px black;
+  padding: 0.5rem 1rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  display: none;
+  word-break: break-all;
 }
 
 /*# sourceMappingURL=style.css.map */

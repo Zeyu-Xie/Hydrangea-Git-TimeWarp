@@ -1,3 +1,3 @@
 # Hydrangea-Git-TimeWarp
 
-A macOS command-line tool to change Git commit times.
+A macOS web-based tool to change Git commit records.

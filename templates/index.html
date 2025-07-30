@@ -11,10 +11,12 @@
 
 <body>
 
+    <!-- Header -->
     <header id="header">
         <h1>Hydrangea Git TimeWarp</h1>
     </header>
 
+    <!-- Repo info -->
     <section id="section-repo-info">
         <div id="div-repo-info">
             <table id="table-repo-info">
@@ -23,7 +25,7 @@
                         <p>Repo Name</p>
                     </th>
                     <td>
-                        <p id="p-repo-name"></p>
+                        <p id="p-repo-name" class="repo-name font-mono"></p>
                     </td>
                 </tr>
                 <tr>
@@ -31,13 +33,14 @@
                         <p>Repo Path</p>
                     </th>
                     <td>
-                        <p id="p-repo-path"></p>
+                        <p id="p-repo-path" class="repo-path font-mono"></p>
                     </td>
                 </tr>
             </table>
         </div>
     </section>
 
+    <!-- Git commits table -->
     <section id="section-git-commits">
         <div id="div-git-commits">
             <table id="table-git-commits">
@@ -69,6 +72,23 @@
                 </thead>
                 <tbody></tbody>
             </table>
+        </div>
+    </section>
+
+    <!-- Alert frame -->
+    <section id="section-alert-frame">
+        <div id="div-alert-frame">
+            <p><b>⚠️ Attention</b></p>
+            <p>You are making changes to repository <span class="repo-name font-mono"></span>.</p>
+            <p>Commit ID: <span class="commit font-mono"></span></p>
+            <p><b>Details</b></p>
+            <p>Before: <span class="key"></span> = <span class="old-value font-mono"></span></p>
+            <p>After: <span class="key"></span> = <span class="value font-mono"></span></p>
+            <p id="wait-message-alert-frame-continue" class="color-red display-none">Please wait for commands to run. It
+                may take seconds.</p>
+            <div class="margin-vertical-1 text-align-end"><button id="button-alert-frame-cancel"
+                    type="button">Cancel</button> <button id="button-alert-frame-continue"
+                    type="button">Continue</button></div>
         </div>
     </section>
 

@@ -1,21 +1,44 @@
-#table-repo-info {
-  tr {
-    td {
-      p {
-        font-family: "Courier New", Courier, monospace;
-      }
-    }
-  }
+// Colors
+.color-red {
+  color: red;
 }
 
-#table-git-commits {
-  tbody {
-    tr {
-      td {
-        p {
-          font-family: "Courier New", Courier, monospace;
-        }
-      }
-    }
-  }
+// Display
+.display-none {
+  display: none;
+}
+
+// Fonts
+.font-mono {
+  font-family: "Courier New", Courier, monospace;
+}
+
+// Margin
+.margin-vertical-1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+// Text align
+.text-align-end {
+  text-align: end;
+}
+
+#div-alert-frame {
+  // Appearance
+  background-color: white;
+  border: solid 1px black;
+  padding: 0.5rem 1rem;
+
+  // Position
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+
+  // Display
+  display: none;
+
+  // Text
+  word-break: break-all;
 }
