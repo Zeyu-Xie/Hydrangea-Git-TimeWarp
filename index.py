@@ -24,10 +24,9 @@ PORT = args.port
 REPO_PATH = args.repo_path
 
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
+HTML_PATH = os.path.join(STATIC_DIR, "index.html")
 
 static_files = StaticFiles(directory=STATIC_DIR)
-templates = Jinja2Templates(directory=TEMPLATE_DIR)
 
 # == Routers ==
 
@@ -77,10 +76,12 @@ def request_repo_path():
     return Response(content=REPO_PATH, media_type="text/plain", status_code=200)
 
 
-# Routers - Resources
+# Routers - Page
 @app.get("/", response_class=HTMLResponse)
-def request_(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def home():
+    with open(HTML_PATH, "r", encoding="utf-8") as f:
+        html_content = f.read()
+    return html_content
 
 
 # == Run ==
