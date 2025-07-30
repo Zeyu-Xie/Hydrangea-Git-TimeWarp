@@ -1,5 +1,14 @@
+import datetime
 import os
 import subprocess
+
+
+def _iso_to_git_raw(iso_str):
+    iso_str = iso_str.strip()
+    dt = datetime.datetime.fromisoformat(iso_str)
+    ts = int(dt.timestamp())
+    offset = dt.strftime("%z") if dt.strftime("%z") else "+0000"
+    return f"{ts} {offset}"
 
 
 def git_filter_repo_commit_callback(repo_path: str, commit_id: str, data: dict):
@@ -76,8 +85,11 @@ def git_filter_repo_commit_callback(repo_path: str, commit_id: str, data: dict):
     # Construct callback string
     callback = f'if commit.original_id == b"{commit_id}":'
     for key, val in data.items():
+        _val = val
+        if key == "author_date" or key == "committer_date":
+            _val = _iso_to_git_raw(val)
         callback += "\n"
-        callback += f"    commit.{key} = b{repr(val)}"
+        callback += f"    commit.{key} = b{repr(_val)}"
     # Run git filter-repo command
     output = subprocess.check_output(
         ["git", "filter-repo", "--force", "--commit-callback", callback],

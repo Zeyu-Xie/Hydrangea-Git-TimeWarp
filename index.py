@@ -54,19 +54,11 @@ def request_git_commits():
 @app.post("/git_filter_repo_commit_callback", response_class=JSONResponse)
 async def request_git_filter_repo_commit_callback(request: Request):
     try:
-
-        query = dict(request.query_params)
+        commit = request.query_params.get("commit")
         body = await request.json()
-
-        print(query)
-        print(body)
-
-        commit = query["commit"]
-        data = body
-        print(commit)
-        print(data)
-
-        git_filter_repo_commit_callback(repo_path=REPO_PATH, commit_id=commit, data=data)
+        git_filter_repo_commit_callback(
+            repo_path=REPO_PATH, commit_id=commit, data=body
+        )
         return JSONResponse(content={"status": "success"}, status_code=200)
     except Exception as e:
         return JSONResponse(
