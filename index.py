@@ -36,13 +36,11 @@ app = FastAPI()
 app.mount("/static", static_files, name="static")
 
 
-# Routers - Resources
-@app.get("/", response_class=HTMLResponse)
-def request_(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+# Routers - Check connections
+@app.get("/check_connections")
+def request_check_connections():
+    return Response(content="OK", media_type="text/plain", status_code=200)
 
-
-@app.get("/style.css", response_class=StaticFiles)
 
 # Routers - Functions
 @app.get("/git_commits", response_class=JSONResponse)
@@ -66,10 +64,23 @@ async def request_git_filter_repo_commit_callback(request: Request):
         )
 
 
-# Routers - Check connections
-@app.get("/check_connections")
-def request_check_connections():
-    return Response(content="OK", media_type="text/plain", status_code=200)
+# Routers - Info
+@app.get("/repo_name")
+def request_repo_name():
+    return Response(
+        content=os.path.basename(REPO_PATH), media_type="text/plain", status_code=200
+    )
+
+
+@app.get("/repo_path")
+def request_repo_path():
+    return Response(content=REPO_PATH, media_type="text/plain", status_code=200)
+
+
+# Routers - Resources
+@app.get("/", response_class=HTMLResponse)
+def request_(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 # == Run ==

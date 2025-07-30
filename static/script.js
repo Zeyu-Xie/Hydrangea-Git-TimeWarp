@@ -1,7 +1,14 @@
 // Commits data (dict)
+let repo_name = "";
+let repo_path = "";
 let data = {};
 
 // Functions for creating elements in tables
+function _createDiv(content) {
+    const _div = document.createElement("div");
+    _div.appendChild(content);
+    return _div;
+}
 function _createInput(index, key, value) {
     const _input = document.createElement("input");
     _input.dataset.index = index;
@@ -53,6 +60,25 @@ async function edit_commits(index, key, value) {
 
 // Run get commits at the beginning
 (async () => {
+
+    // Get repo info
+    await fetch("repo_name")
+        .then(res => res.text())
+        .then(res => {
+            repo_name = res;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    await fetch("repo_path")
+        .then(res => res.text())
+        .then(res => {
+            repo_path = res;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+
     // Get commits data
     await fetch("/git_commits")
         .then(res => res.json())
@@ -63,18 +89,22 @@ async function edit_commits(index, key, value) {
             console.error(err);
         });
 
-    // Render table
-    const _tbody = document.querySelector("#table-git-commits-table tbody");
+    // Render repo info table
+    document.querySelector("#p-repo-name").innerText = repo_name;
+    document.querySelector("#p-repo-path").innerText = repo_path;
+
+    // Render commits table
+    const _tbody = document.querySelector("#table-git-commits tbody");
     data.forEach((commit, index) => {
-        const tr = document.createElement("tr");
-        tr.appendChild(_createTd(_createP(commit.commit)))
-        tr.appendChild(_createTd(_createInput(index, "author_name", commit.author_name)));
-        tr.appendChild(_createTd(_createInput(index, "author_email", commit.author_email)));
-        tr.appendChild(_createTd(_createInput(index, "author_date", commit.author_date)));
-        tr.appendChild(_createTd(_createInput(index, "committer_name", commit.committer_name)));
-        tr.appendChild(_createTd(_createInput(index, "committer_email", commit.committer_email)));
-        tr.appendChild(_createTd(_createInput(index, "committer_date", commit.committer_date)));
-        tr.appendChild(_createTd(_createInput(index, "message", commit.message)));
-        _tbody.appendChild(tr);
+        const _tr = document.createElement("tr");
+        _tr.appendChild(_createTd(_createP(commit.commit)))
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "author_name", commit.author_name))));
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "author_email", commit.author_email))));
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "author_date", commit.author_date))));
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "committer_name", commit.committer_name))));
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "committer_email", commit.committer_email))));
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "committer_date", commit.committer_date))));
+        _tr.appendChild(_createTd(_createDiv(_createInput(index, "message", commit.message))));
+        _tbody.appendChild(_tr);
     });
 })();
