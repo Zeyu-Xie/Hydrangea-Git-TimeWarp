@@ -3,7 +3,7 @@ import pandas as pd
 import subprocess
 
 
-def git_commits(repo_path: str):
+def git_commits(repo_path: str) -> dict:
     """
     Extracts commit information from a git repository and returns it as a pandas DataFrame.
 
@@ -41,6 +41,7 @@ def git_commits(repo_path: str):
             [
                 "git",
                 "log",
+                "--date=iso8601-strict",
                 "--pretty=format:%H%x1f%an%x1f%ae%x1f%ad%x1f%cn%x1f%ce%x1f%cd%x1f%s%x1e",
             ],
             cwd=repo_path,
@@ -57,27 +58,27 @@ def git_commits(repo_path: str):
             fields = line.strip().split("\x1f")
             rows.append(
                 {
-                    "Commit": fields[0],
-                    "AuthorName": fields[1],
-                    "AuthorEmail": fields[2],
-                    "AuthorDate": fields[3],
-                    "CommitterName": fields[4],
-                    "CommitterEmail": fields[5],
-                    "CommitterDate": fields[6],
-                    "Message": fields[7],
+                    "commit": fields[0],
+                    "author_name": fields[1],
+                    "author_email": fields[2],
+                    "author_date": fields[3],
+                    "committer_name": fields[4],
+                    "committer_email": fields[5],
+                    "committer_date": fields[6],
+                    "message": fields[7],
                 }
             )
         commits_pd = pd.DataFrame(
             rows,
             columns=[
-                "Commit",
-                "AuthorName",
-                "AuthorEmail",
-                "AuthorDate",
-                "CommitterName",
-                "CommitterEmail",
-                "CommitterDate",
-                "Message",
+                "commit",
+                "author_name",
+                "author_email",
+                "author_date",
+                "committer_name",
+                "committer_email",
+                "committer_date",
+                "message",
             ],
         )
     except Exception as e:
@@ -85,8 +86,8 @@ def git_commits(repo_path: str):
 
     # == Return ==
 
-    # Return pd.DataFrame
-    return commits_pd
+    # Return dict
+    return commits_pd.to_dict(orient="records")
 
 
 __all__ = ["git_commits"]
