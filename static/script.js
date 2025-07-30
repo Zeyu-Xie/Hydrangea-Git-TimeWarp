@@ -49,7 +49,7 @@ function _createTd(content, dataset = {}) {
     return _td;
 }
 
-// Function for edit commits
+// Functions for edit commits
 async function edit_commits(index, key, value) {
 
     // Old commit data
